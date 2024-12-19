@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Behavior%20Tree/Editors/BehaviorTreeEditor.uss?fileID=7433441132597879392&amp;guid=4a84222f46dbf274cb9322179aef5365&amp;type=3#BehaviorTreeEditor" />
+    <uie:Toolbar>
+        <uie:ToolbarMenu tabindex="-1" parse-escape-sequences="false" display-tooltip-when-elided="true" name="Assets" text="Assets" />
+    </uie:Toolbar>
+    <SplitView fixed-pane-initial-dimension="304" style="flex-direction: row;">
+        <ui:VisualElement name="Left" style="flex-grow: 1; flex-shrink: 1; background-color: rgb(32, 32, 32); width: 20%;">
+            <ui:Label tabindex="-1" text="Inspector" parse-escape-sequences="true" display-tooltip-when-elided="true" style="background-color: rgba(95, 95, 95, 0); opacity: 1; color: rgb(255, 255, 255);" />
+            <InspectorView style="flex-grow: 1; background-color: rgb(56, 56, 56); -unity-font: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=84d83ea439cd4b444a9ba631ec0b4eec&amp;type=3#NotInter-Regular&apos;);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Right" style="flex-grow: 1; flex-shrink: 1; background-color: rgb(32, 32, 32);">
+            <ui:Label tabindex="-1" text="Window" parse-escape-sequences="true" display-tooltip-when-elided="false" style="background-color: rgb(32, 32, 32); -unity-text-outline-color: rgba(255, 255, 255, 0); color: rgb(255, 255, 255);" />
+            <BehaviorTreeView focusable="true" style="flex-grow: 1;" />
+        </ui:VisualElement>
+    </SplitView>
+</ui:UXML>

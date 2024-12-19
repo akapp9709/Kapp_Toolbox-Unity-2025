@@ -1,29 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
-using EnemyAI;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyBrain : EnemyFSM
+namespace AIModels
 {
-    public EnemyStats enemyStats;
-    protected Dictionary<string, object> knowledge = new Dictionary<string, object>();
-
-    public void AddToDictionary(string name, object value)
+    public class EnemyBrain : EnemyFSM
     {
-        if(knowledge.ContainsKey(name))
-            return;
+        public EnemyStats enemyStats;
+        protected Dictionary<string, object> knowledge = new Dictionary<string, object>();
 
-        knowledge[name] = value;
-    }
-
-    public object GetValue(string name)
-    {
-        if (knowledge.ContainsKey(name))
+        public void AddToDictionary(string name, object value)
         {
-            return knowledge[name];
+            if (knowledge.ContainsKey(name))
+                return;
+
+            knowledge[name] = value;
         }
-        else
-            return null;
+
+        public object GetValue(string name)
+        {
+            if (knowledge.ContainsKey(name))
+            {
+                return knowledge[name];
+            }
+            else
+                return null;
+        }
+
+        public bool TryGetValue<T>(string name, out T value)
+        {
+            if (knowledge.ContainsKey(name))
+            {
+                value = (T)knowledge[name];
+                return true;
+            }
+
+            value = default(T);
+            return false;
+        }
     }
 }

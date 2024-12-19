@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AIModels;
 
-namespace EnemyAI
+namespace AIModels
 {
     public abstract class EnemyFSM
     {
@@ -19,7 +20,7 @@ namespace EnemyAI
             }
         }
 
-        public void StartFSM(string startState, EnemyBehavior controller)
+        public virtual void StartFSM(string startState, EnemyBehavior controller)
         {
             if (_states.ContainsKey(startState))
             {
@@ -28,7 +29,7 @@ namespace EnemyAI
             }
         }
 
-        public void UpdateFSM(EnemyBehavior controller)
+        public virtual void UpdateFSM(EnemyBehavior controller)
         {
             if (_currentState != null)
             {

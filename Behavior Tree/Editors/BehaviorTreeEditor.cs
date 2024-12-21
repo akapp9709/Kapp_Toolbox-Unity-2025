@@ -16,6 +16,8 @@ public class BehaviorTreeEditor : EditorWindow
     {
         BehaviorTreeEditor wnd = GetWindow<BehaviorTreeEditor>();
         wnd.titleContent = new GUIContent("BehaviorTreeEditor");
+
+
     }
 
     public void CreateGUI()

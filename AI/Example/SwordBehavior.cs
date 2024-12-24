@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class SwordBehavior : EnemyBehavior
 {
     [SerializeField] List<Vector3> PatrolPoints = new List<Vector3>();
+    [SerializeField] float StrafeDistance = 3;
     public LayerMask SightLayerMask;
 
     void OnDrawGizmos()
@@ -26,7 +27,7 @@ public class SwordBehavior : EnemyBehavior
         _brain.AddToDictionary("Nav-Agent", GetComponent<NavMeshAgent>());
         _brain.AddToDictionary("Target", GameObject.FindGameObjectWithTag("Player").transform);
         _brain.AddToDictionary("Sight-Layer", SightLayerMask);
-
+        _brain.AddToDictionary("Strafe-Distance", StrafeDistance);
 
         _brain.StartFSM("Patrol", this);
     }

@@ -13,6 +13,7 @@ public class SwordBrain : EnemyBrain
     public SwordBrain()
     {
         AddState("Patrol", new SwordStates.PatrolState(this));
+        AddState("Combat", new SwordStates.CombatState(this));
     }
 
     public override void StartFSM(string startState, EnemyBehavior controller)
@@ -36,6 +37,10 @@ public class SwordBrain : EnemyBrain
             LineOfSight = true;
 
         }
+
+
+        if (LineOfSight)
+            ChangeState("Combat", controller);
 
     }
 }

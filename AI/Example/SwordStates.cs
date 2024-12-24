@@ -74,9 +74,29 @@ public class SwordStates
 
         }
 
+        private Timer _waitTimer;
+        private NavMeshAgent _agent;
+        private Transform _targetTrans, _transform;
+        private float _strafeDist;
+        private Vector3 _targetPos;
+        private bool _strafing;
+
         public void EnterState(EnemyBehavior controller)
         {
+            _brain.TryGetValue("Target", out _targetTrans);
+            _brain.TryGetValue("Strafe-Distance", out _strafeDist);
+            _brain.TryGetValue("Nav-Agent", out _agent);
 
+            _agent.stoppingDistance = _strafeDist;
+            _targetPos = _targetTrans.position;
+            if (NavMesh.SamplePosition(_targetPos, out NavMeshHit navMeshHit, 1f, NavMesh.AllAreas))
+            {
+                _agent.SetDestination(navMeshHit.position);
+            }
+
+
+            _waitTimer = new Timer(3, ChooseNewPosition);
+            _transform = controller.transform;
         }
 
         public void ExitState(EnemyBehavior controller)
@@ -91,7 +111,52 @@ public class SwordStates
 
         public void UpdateState(EnemyBehavior controller)
         {
+            if (!_strafing && _agent.remainingDistance > _strafeDist)
+            {
+                _strafing = true;
+                Approach();
+                return;
+            }
 
+            if (_strafing && _agent.remainingDistance > (_strafeDist + 2f))
+            {
+                _strafing = false;
+            }
+
+            _waitTimer.Tick(Time.deltaTime);
+        }
+
+        private void Approach()
+        {
+            _agent.stoppingDistance = _strafeDist;
+            _targetPos = _targetTrans.position;
+            if (NavMesh.SamplePosition(_targetPos, out NavMeshHit navMeshHit, 1f, NavMesh.AllAreas))
+            {
+                _agent.SetDestination(navMeshHit.position);
+            }
+        }
+
+        private void ChooseNewPosition()
+        {
+            Debug.Log("GEtting new strafe position");
+            var ray = _targetTrans.forward;
+            var theta = Random.Range(0, 360) * Mathf.Deg2Rad;
+
+            var dir = new Vector3(ray.x * Mathf.Cos(theta), ray.y, ray.z * Mathf.Sin(theta));
+            dir.Normalize();
+            _agent.ResetPath();
+            _agent.stoppingDistance = 0.5f;
+            _targetPos = dir * _strafeDist + _targetTrans.position;
+            Debug.DrawLine(_transform.position, _targetPos, Color.red, 0.5f);
+            if (NavMesh.SamplePosition(_targetPos, out NavMeshHit navMeshHit, 1f, NavMesh.AllAreas))
+            {
+
+                _agent.SetDestination(navMeshHit.position);
+            }
+            else
+                Debug.Log("Failed to find valid position");
+
+            _waitTimer = new Timer(3, ChooseNewPosition);
         }
     }
 

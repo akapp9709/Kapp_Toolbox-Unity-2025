@@ -46,6 +46,10 @@ namespace AIModels
                 _currentState = _states[state];
                 _currentState.EnterState(controller);
             }
+            else
+            {
+                Debug.LogWarning($"{state} State Not Defined in Brain");
+            }
         }
     }
 

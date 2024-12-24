@@ -75,17 +75,23 @@ public class SwordStates
         }
 
         private Timer _waitTimer;
+        private Timer _requestTimer;
         private NavMeshAgent _agent;
         private Transform _targetTrans, _transform;
         private float _strafeDist;
         private Vector3 _targetPos;
         private bool _strafing;
+        private CombatManager _manager;
+        private EnemyBehavior _controller;
 
         public void EnterState(EnemyBehavior controller)
         {
+
+            _controller = controller;
             _brain.TryGetValue("Target", out _targetTrans);
             _brain.TryGetValue("Strafe-Distance", out _strafeDist);
             _brain.TryGetValue("Nav-Agent", out _agent);
+            _brain.TryGetValue("Combat-Manager", out _manager);
 
             _agent.stoppingDistance = _strafeDist;
             _targetPos = _targetTrans.position;
@@ -96,6 +102,7 @@ public class SwordStates
 
 
             _waitTimer = new Timer(3, ChooseNewPosition);
+            _requestTimer = new Timer(5, RequestTicket);
             _transform = controller.transform;
         }
 
@@ -111,6 +118,8 @@ public class SwordStates
 
         public void UpdateState(EnemyBehavior controller)
         {
+            _requestTimer.Tick(Time.deltaTime);
+
             if (!_strafing && _agent.remainingDistance > _strafeDist)
             {
                 _strafing = true;
@@ -157,6 +166,39 @@ public class SwordStates
                 Debug.Log("Failed to find valid position");
 
             _waitTimer = new Timer(3, ChooseNewPosition);
+        }
+
+        private void RequestTicket()
+        {
+            if (_manager.RequestTickets(2))
+                _brain.ChangeState("Attack", _controller);
+        }
+    }
+
+    public class AttackState : SwordState, IState
+    {
+        public AttackState(EnemyBrain brain) : base(brain)
+        {
+        }
+
+        public void EnterState(EnemyBehavior controller)
+        {
+            Debug.Log("Entered Attack State");
+        }
+
+        public void ExitState(EnemyBehavior controller)
+        {
+
+        }
+
+        public string GetName()
+        {
+            return "Attack";
+        }
+
+        public void UpdateState(EnemyBehavior controller)
+        {
+
         }
     }
 

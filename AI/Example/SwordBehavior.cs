@@ -28,6 +28,7 @@ public class SwordBehavior : EnemyBehavior
         _brain.AddToDictionary("Target", GameObject.FindGameObjectWithTag("Player").transform);
         _brain.AddToDictionary("Sight-Layer", SightLayerMask);
         _brain.AddToDictionary("Strafe-Distance", StrafeDistance);
+        _brain.AddToDictionary("Combat-Manager", FindObjectOfType<CombatManager>());
 
         _brain.StartFSM("Patrol", this);
     }

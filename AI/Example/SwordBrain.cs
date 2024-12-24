@@ -14,6 +14,7 @@ public class SwordBrain : EnemyBrain
     {
         AddState("Patrol", new SwordStates.PatrolState(this));
         AddState("Combat", new SwordStates.CombatState(this));
+        AddState("Attack", new SwordStates.AttackState(this));
     }
 
     public override void StartFSM(string startState, EnemyBehavior controller)

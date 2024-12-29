@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -24,11 +25,23 @@ public class BehaviorTreeEditor : EditorWindow
     {
         // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
+        var vsGuids = AssetDatabase.FindAssets("BehaviorTreeEditor t:VisualTreeAsset");
+        string vtaPath = AssetDatabase.GUIDToAssetPath(vsGuids.FirstOrDefault());
+        Debug.Log(vtaPath);
 
-        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Behavior Tree/Editors/BehaviorTreeEditor.uxml");
+        var ssGuids = AssetDatabase.FindAssets("BehaviorTreeEditor t:StyleSheet");
+        string ssPath = AssetDatabase.GUIDToAssetPath(ssGuids.FirstOrDefault());
+        Debug.Log(ssPath);
+
+        if (root == null)
+        {
+            Debug.Log("this fucking thing is missing");
+        }
+
+        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(vtaPath);
         visualTree.CloneTree(root);
 
-        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Behavior Tree/Editors/BehaviorTreeEditor.uss");
+        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(ssPath);
         root.styleSheets.Add(styleSheet);
 
         treeView = root.Q<BehaviorTreeView>();

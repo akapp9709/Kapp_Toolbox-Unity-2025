@@ -21,7 +21,11 @@ public abstract class CompositeNode : Node
 
     public override void SortChildren()
     {
-        children.Sort((a, b) => a.position.y.CompareTo(b.position.y));
+        if (children == null)
+            children = new List<Node>();
+
+        if (children.Count > 1)
+            children.Sort((a, b) => a.position.y.CompareTo(b.position.y));
         foreach (var child in children)
         {
             child.SortChildren();

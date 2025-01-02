@@ -77,8 +77,15 @@ public class BehaviorTreeView : GraphView
                 }
 
                 Edge edge = elem as Edge;
+
+
                 if (edge != null)
                 {
+                    if (edge.output == null || edge.input == null)
+                    {
+                        Debug.Log("Orphaned Edge");
+                    }
+
                     var parent = edge.output.node as NodeView;
                     var child = edge.input.node as NodeView;
                     tree.RemoveChild(parent.node, child.node);

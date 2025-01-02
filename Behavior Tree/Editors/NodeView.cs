@@ -23,15 +23,6 @@ public class NodeView : UnityEditor.Experimental.GraphView.Node
 
         CreateInputPorts();
         CreateOutputPorts();
-
-        this.RegisterCallback<DragEnterEvent>(OnDragStart);
-    }
-
-
-
-    private void OnDragStart(DragEnterEvent evt)
-    {
-        Debug.Log("Being Dragged");
     }
 
     private void CreateInputPorts()
@@ -101,10 +92,4 @@ public class NodeView : UnityEditor.Experimental.GraphView.Node
         }
     }
 
-
-
-    public void OnDragStart()
-    {
-        Debug.Log("Starting Drag");
-    }
 }

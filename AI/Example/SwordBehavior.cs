@@ -10,6 +10,8 @@ public class SwordBehavior : EnemyBehavior
     [SerializeField] float StrafeDistance = 3;
     public LayerMask SightLayerMask;
 
+    int _hashMotionSpeed;
+
     void OnDrawGizmos()
     {
         foreach (var pos in PatrolPoints)
@@ -29,6 +31,10 @@ public class SwordBehavior : EnemyBehavior
         _brain.AddToDictionary("Sight-Layer", SightLayerMask);
         _brain.AddToDictionary("Strafe-Distance", StrafeDistance);
         _brain.AddToDictionary("Combat-Manager", FindObjectOfType<CombatManager>());
+        _brain.AddToDictionary("Animator", GetComponent<Animator>());
+
+        _hashMotionSpeed = Animator.StringToHash("MotionSpeed");
+        GetComponent<Animator>().SetFloat(_hashMotionSpeed, 1);
 
         _brain.StartFSM("Patrol", this);
     }

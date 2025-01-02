@@ -19,8 +19,12 @@ public class SwordStates
     {
         List<Vector3> _patrolPoints;
         NavMeshAgent _agent;
+        Animator _anim;
         Timer _waitTimer;
         int _posIndex = 0;
+
+        int _hashSpeed;
+        int _hashMotionSpeed;
 
         public PatrolState(EnemyBrain brain) : base(brain)
         {
@@ -29,10 +33,15 @@ public class SwordStates
         public void EnterState(EnemyBehavior controller)
         {
             _brain.TryGetValue("Patrol-Points", out _patrolPoints);
+            _brain.TryGetValue("Animator", out _anim);
             if (_brain.TryGetValue("Nav-Agent", out _agent))
                 _agent.SetDestination(_patrolPoints[_posIndex]);
             else
                 Debug.LogWarning("<color=yellow>Unable to retrieve Agent</color>");
+
+            _hashSpeed = Animator.StringToHash("Speed");
+            _hashMotionSpeed = Animator.StringToHash("MotionSpeed");
+
 
             _waitTimer = new Timer(5f, GoToNextPosition);
         }
@@ -54,6 +63,9 @@ public class SwordStates
                 Debug.Log("Ticking");
                 _waitTimer.Tick(Time.deltaTime);
             }
+
+            _anim.SetFloat(_hashSpeed, _agent.velocity.magnitude);
+
         }
 
         private void GoToNextPosition()
@@ -83,6 +95,8 @@ public class SwordStates
         private bool _strafing;
         private CombatManager _manager;
         private EnemyBehavior _controller;
+        Animator _anim;
+        int _hashSpeed, _hashX, _hashY;
 
         public void EnterState(EnemyBehavior controller)
         {
@@ -92,6 +106,7 @@ public class SwordStates
             _brain.TryGetValue("Strafe-Distance", out _strafeDist);
             _brain.TryGetValue("Nav-Agent", out _agent);
             _brain.TryGetValue("Combat-Manager", out _manager);
+            _brain.TryGetValue("Animator", out _anim);
 
             _agent.stoppingDistance = _strafeDist;
             _targetPos = _targetTrans.position;
@@ -100,10 +115,13 @@ public class SwordStates
                 _agent.SetDestination(navMeshHit.position);
             }
 
-
             _waitTimer = new Timer(3, ChooseNewPosition);
             _requestTimer = new Timer(5, RequestTicket);
             _transform = controller.transform;
+
+            _hashSpeed = Animator.StringToHash("Speed");
+            _hashY = Animator.StringToHash("YVelocity");
+            _hashX = Animator.StringToHash("XVelocity");
         }
 
         public void ExitState(EnemyBehavior controller)
@@ -118,7 +136,7 @@ public class SwordStates
 
         public void UpdateState(EnemyBehavior controller)
         {
-            _requestTimer.Tick(Time.deltaTime);
+            //_requestTimer.Tick(Time.deltaTime);
 
             if (!_strafing && _agent.remainingDistance > _strafeDist)
             {
@@ -132,22 +150,31 @@ public class SwordStates
                 _strafing = false;
             }
 
+            _agent.speed = 3;
+            _agent.updateRotation = false;
+            _transform.LookAt(_targetTrans, Vector3.up);
+
             _waitTimer.Tick(Time.deltaTime);
+            _anim.SetFloat(_hashSpeed, _agent.velocity.magnitude);
+            _anim.SetFloat(_hashX, Vector3.Dot(_agent.velocity, _transform.right));
+            _anim.SetFloat(_hashY, Vector3.Dot(_agent.velocity, _transform.forward));
         }
 
         private void Approach()
         {
+
+            _agent.updateRotation = true;
             _agent.stoppingDistance = _strafeDist;
             _targetPos = _targetTrans.position;
             if (NavMesh.SamplePosition(_targetPos, out NavMeshHit navMeshHit, 1f, NavMesh.AllAreas))
             {
                 _agent.SetDestination(navMeshHit.position);
             }
+
         }
 
         private void ChooseNewPosition()
         {
-            Debug.Log("GEtting new strafe position");
             var ray = _targetTrans.forward;
             var theta = Random.Range(0, 360) * Mathf.Deg2Rad;
 
@@ -162,8 +189,6 @@ public class SwordStates
 
                 _agent.SetDestination(navMeshHit.position);
             }
-            else
-                Debug.Log("Failed to find valid position");
 
             _waitTimer = new Timer(3, ChooseNewPosition);
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Add to this one day
 public class EaseFunctions
 {
     public enum EaseType
@@ -9,7 +10,7 @@ public class EaseFunctions
         CircEaseOut,
         Linear
     }
-    
+
     public static float AccelerateValue(float start, float duration, float currentTime, float startVal, float endVal, EaseType ease)
     {
         if (currentTime > duration)
@@ -31,7 +32,7 @@ public class EaseFunctions
 
         return Mathf.Lerp(startVal, endVal, easedValue);
     }
-    
+
     private static float CircularEaseOut(float x)
     {
         return Mathf.Sqrt(1 - Mathf.Pow(1 - x, 2));

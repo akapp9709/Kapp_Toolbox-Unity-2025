@@ -20,6 +20,7 @@ public abstract class DecoratorNode : Node
 
     public override void SortChildren()
     {
-        child.SortChildren();
+        if (child != null)
+            child.SortChildren();
     }
 }

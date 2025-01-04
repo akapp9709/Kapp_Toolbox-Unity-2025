@@ -1,34 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
+using AIModels;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
     public int maxTickets = 5;
     [SerializeField] int currentTickets;
+
+    public float ReplenishTime = 2f, ticketCooldown = 1f;
+    [Range(0, 1)]
+    public float repeatAttackChance = 0.5f;
+    Timer _replenishTimer, _coolDownTimer;
+    bool _canGrantTicket = true;
+    EnemyBehavior _lastAttacker;
     // Start is called before the first frame update
     void Start()
     {
-        currentTickets = maxTickets;
+        _replenishTimer = new Timer(ReplenishTime, ReplenishTicket);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        _coolDownTimer?.Tick(Time.deltaTime);
+        if (currentTickets <= maxTickets)
+            _replenishTimer?.Tick(Time.deltaTime);
     }
 
-    public bool RequestTickets(int amount)
+    private void ReplenishTicket()
     {
-        if (amount <= currentTickets)
+        currentTickets++;
+
+        _replenishTimer = new Timer(ReplenishTime, ReplenishTicket);
+    }
+
+    private void ToggleGranting()
+    {
+        _canGrantTicket = true;
+    }
+
+    public bool RequestTickets(int amount, EnemyBehavior entity)
+    {
+        bool canAttack = (entity != _lastAttacker)
+            || Random.Range(0, 1f) > repeatAttackChance;
+
+        if (!canAttack)
+            return false;
+
+        if (amount <= currentTickets && _canGrantTicket)
         {
+            _canGrantTicket = false;
             currentTickets -= amount;
-            Debug.Log("Ticket(s) granted");
+            _coolDownTimer = new Timer(ticketCooldown, ToggleGranting);
+            _lastAttacker = entity;
+            Debug.Log("Ticket(s) granted to " + entity.EntityName);
             return true;
         }
         else
         {
-            Debug.Log("Ticket(s) denied");
+            Debug.Log($"Ticket(s) for {entity.EntityName} denied");
             return false;
         }
     }

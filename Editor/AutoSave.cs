@@ -24,11 +24,9 @@ public class AutoSave
         switch (change)
         {
             case PlayModeStateChange.EnteredPlayMode:
-                Debug.Log("Entering Play");
                 _canSave = false;
                 return;
             case PlayModeStateChange.EnteredEditMode:
-                Debug.Log("Exiting Play");
                 _canSave = true;
                 return;
             default:
@@ -50,5 +48,7 @@ public class AutoSave
     {
         EditorSceneManager.SaveOpenScenes();
     }
-#endif
+
 }
+
+#endif

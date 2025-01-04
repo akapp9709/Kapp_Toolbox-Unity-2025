@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace AIModels
 {
-    public class EnemyBehavior : MonoBehaviour
+    public partial class EnemyBehavior : MonoBehaviour
     {
         protected EnemyBrain _brain;
 

@@ -60,7 +60,6 @@ public class SwordStates
         {
             if (_agent.remainingDistance <= _agent.stoppingDistance)
             {
-                Debug.Log("Ticking");
                 _waitTimer.Tick(Time.deltaTime);
             }
 
@@ -70,7 +69,6 @@ public class SwordStates
 
         private void GoToNextPosition()
         {
-            Debug.Log("Going tp nexzt position");
             _posIndex++;
             _posIndex = _posIndex % _patrolPoints.Count;
 
@@ -96,7 +94,7 @@ public class SwordStates
         private CombatManager _manager;
         private EnemyBehavior _controller;
         Animator _anim;
-        int _hashSpeed, _hashX, _hashY;
+        int _hashSpeed, _hashX, _hashY, _hashCombatFlag;
 
         public void EnterState(EnemyBehavior controller)
         {
@@ -120,13 +118,16 @@ public class SwordStates
             _transform = controller.transform;
 
             _hashSpeed = Animator.StringToHash("Speed");
+            _hashCombatFlag = Animator.StringToHash("inCombat");
             _hashY = Animator.StringToHash("YVelocity");
             _hashX = Animator.StringToHash("XVelocity");
+
+            _anim.SetFloat(_hashCombatFlag, 1);
         }
 
         public void ExitState(EnemyBehavior controller)
         {
-
+            _anim.SetFloat(_hashCombatFlag, 0);
         }
 
         public string GetName()
@@ -136,7 +137,7 @@ public class SwordStates
 
         public void UpdateState(EnemyBehavior controller)
         {
-            //_requestTimer.Tick(Time.deltaTime);
+            _requestTimer.Tick(Time.deltaTime);
 
             if (!_strafing && _agent.remainingDistance > _strafeDist)
             {
@@ -186,7 +187,6 @@ public class SwordStates
             Debug.DrawLine(_transform.position, _targetPos, Color.red, 0.5f);
             if (NavMesh.SamplePosition(_targetPos, out NavMeshHit navMeshHit, 1f, NavMesh.AllAreas))
             {
-
                 _agent.SetDestination(navMeshHit.position);
             }
 
@@ -195,25 +195,55 @@ public class SwordStates
 
         private void RequestTicket()
         {
-            if (_manager.RequestTickets(2))
+            if (_manager.RequestTickets(2, _controller))
                 _brain.ChangeState("Attack", _controller);
+
+            _requestTimer = new Timer(5, RequestTicket);
         }
     }
 
     public class AttackState : SwordState, IState
     {
+        NavMeshAgent _agent;
+        Animator _anim;
+        float _attackRange;
+        Transform _targetTrans;
+        int _hashAttackTrigger;
+        bool _attacking;
         public AttackState(EnemyBrain brain) : base(brain)
         {
         }
 
         public void EnterState(EnemyBehavior controller)
         {
-            Debug.Log("Entered Attack State");
+            _brain.TryGetValue("Nav-Agent", out _agent);
+            _brain.TryGetValue("Animator", out _anim);
+            _brain.TryGetValue("Attack-Range", out _attackRange);
+            _brain.TryGetValue("Target", out _targetTrans);
+
+            Animator.StringToHash("Attack");
+
+            _agent.stoppingDistance = _attackRange;
+            _agent.destination = _targetTrans.position;
+        }
+
+        public void UpdateState(EnemyBehavior controller)
+        {
+            if (_agent.remainingDistance < _agent.stoppingDistance && !_attacking)
+            {
+                _agent.ResetPath();
+                _anim.SetTrigger("Attack");
+                _attacking = true;
+                return;
+            }
+
+            if (_attacking && _anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.6f)
+                _brain.ChangeState("Combat", controller);
         }
 
         public void ExitState(EnemyBehavior controller)
         {
-
+            _attacking = false;
         }
 
         public string GetName()
@@ -221,10 +251,7 @@ public class SwordStates
             return "Attack";
         }
 
-        public void UpdateState(EnemyBehavior controller)
-        {
 
-        }
     }
 
 }

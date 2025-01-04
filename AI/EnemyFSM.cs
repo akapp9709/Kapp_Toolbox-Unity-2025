@@ -8,7 +8,7 @@ namespace AIModels
     public abstract class EnemyFSM
     {
         private Dictionary<string, IState> _states = new Dictionary<string, IState>();
-        private IState _currentState;
+        protected IState _currentState;
         public bool isActive;
 
 
@@ -39,8 +39,7 @@ namespace AIModels
 
         public void ChangeState(string state, EnemyBehavior controller)
         {
-            if (_states.ContainsKey(state) &&
-                !EqualityComparer<string>.Default.Equals(_currentState.GetName(), state))
+            if (_states.ContainsKey(state) && state != _currentState.GetName())
             {
                 _currentState.ExitState(controller);
                 _currentState = _states[state];

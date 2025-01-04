@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class SwordBehavior : EnemyBehavior
 {
     [SerializeField] List<Vector3> PatrolPoints = new List<Vector3>();
-    [SerializeField] float StrafeDistance = 3;
+    [SerializeField] float StrafeDistance = 3, AttackRange = 1.2f;
     public LayerMask SightLayerMask;
 
     int _hashMotionSpeed;
@@ -32,6 +32,7 @@ public class SwordBehavior : EnemyBehavior
         _brain.AddToDictionary("Strafe-Distance", StrafeDistance);
         _brain.AddToDictionary("Combat-Manager", FindObjectOfType<CombatManager>());
         _brain.AddToDictionary("Animator", GetComponent<Animator>());
+        _brain.AddToDictionary("Attack-Range", AttackRange);
 
         _hashMotionSpeed = Animator.StringToHash("MotionSpeed");
         GetComponent<Animator>().SetFloat(_hashMotionSpeed, 1);

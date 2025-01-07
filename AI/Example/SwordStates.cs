@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AIModels;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -234,8 +235,10 @@ public class SwordStates
                 return;
             }
 
-            if (_attacking && _anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.6f)
-                _brain.ChangeState("Combat", controller);
+            var state = _anim.GetCurrentAnimatorStateInfo(0);
+
+            if (_attacking && state.normalizedTime > 0.4f && state.IsName("OneHand_Up_Attack_1"))
+                _brain.ChangeState("Retreat", controller);
         }
 
         public void ExitState(EnemyBehavior controller)
@@ -246,13 +249,42 @@ public class SwordStates
 
     public class RetreatState : SwordState, IState
     {
+        Transform _transform, _targetTrans;
+        NavMeshAgent _agent;
+        Animator _anim;
+        float _strafeDistance;
+
+        int _hashSpeed, _hashY, _hashX;
+
         public RetreatState(EnemyBrain brain) : base(brain) { }
 
         public string Name => "Retreat";
 
         public void EnterState(EnemyBehavior controller)
         {
+            Debug.Log("Entering Retreat State");
 
+            _transform = controller.transform;
+            _brain.TryGetValue("Target", out _targetTrans);
+            _brain.TryGetValue("Nav-Agent", out _agent);
+            _brain.TryGetValue("Animator", out _anim);
+            _brain.TryGetValue("Strafe-Distance", out _strafeDistance);
+            _agent.ResetPath();
+
+            var randomAngle = Random.Range(-30f, 30f);
+            Quaternion rotate = Quaternion.Euler(0, randomAngle, 0);
+
+            var rotatedForward = rotate * _transform.forward;
+
+            var targetPos = (rotatedForward * -_strafeDistance) + _targetTrans.position;
+            Debug.DrawLine(_transform.position, targetPos, Color.blue, 1f);
+            _agent.stoppingDistance = 0.5f;
+
+            _agent.SetDestination(targetPos);
+
+            _hashSpeed = Animator.StringToHash("Speed");
+            _hashX = Animator.StringToHash("XVelocity");
+            _hashY = Animator.StringToHash("YVelocity");
         }
 
         public void ExitState(EnemyBehavior controller)
@@ -262,7 +294,14 @@ public class SwordStates
 
         public void UpdateState(EnemyBehavior controller)
         {
+            if (_agent.remainingDistance < _agent.stoppingDistance)
+            {
+                _brain.ChangeState("Combat", controller);
+            }
 
+            _anim.SetFloat(_hashSpeed, _agent.velocity.magnitude);
+            _anim.SetFloat(_hashX, Vector3.Dot(_agent.velocity, _transform.right));
+            _anim.SetFloat(_hashY, Vector3.Dot(_agent.velocity, _transform.forward));
         }
     }
 

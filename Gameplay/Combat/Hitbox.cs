@@ -17,7 +17,6 @@ public class Hitbox : MonoBehaviour
 
         if (hurtbox != null && active)
         {
-            Debug.Log("Hit Something");
             hurtbox.health.DeductHealthPts(damage);
         }
 

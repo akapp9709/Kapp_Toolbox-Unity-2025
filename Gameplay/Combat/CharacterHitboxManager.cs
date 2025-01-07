@@ -15,7 +15,6 @@ public class CharacterHitboxManager : MonoBehaviour
 
     public void OnActivateHitBox(string name)
     {
-        Debug.Log("Activating Hitboxes");
         foreach (var hitbox in _hitboxes.Where(h => h.Name == name))
         {
             hitbox.active = true;
@@ -24,7 +23,6 @@ public class CharacterHitboxManager : MonoBehaviour
 
     public void DisableHitBoxes(string name = "")
     {
-        Debug.Log("Deactivating Hitboxes");
 
         if (name == "")
         {

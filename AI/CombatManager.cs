@@ -54,12 +54,10 @@ public class CombatManager : MonoBehaviour
             currentTickets -= amount;
             _coolDownTimer = new Timer(ticketCooldown, ToggleGranting);
             _lastAttacker = entity;
-            Debug.Log("Ticket(s) granted to " + entity.EntityName);
             return true;
         }
         else
         {
-            Debug.Log($"Ticket(s) for {entity.EntityName} denied");
             return false;
         }
     }

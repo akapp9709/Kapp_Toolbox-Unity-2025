@@ -41,7 +41,7 @@ public class SwordBrain : EnemyBrain
         }
 
 
-        if (LineOfSight && !(_currentState.Name is "Combat" or "Attack"))
+        if (LineOfSight && !(_currentState.Name is not "Patrol"))
             ChangeState("Combat", controller);
 
     }

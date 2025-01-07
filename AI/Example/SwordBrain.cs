@@ -15,6 +15,7 @@ public class SwordBrain : EnemyBrain
         AddState("Patrol", new SwordStates.PatrolState(this));
         AddState("Combat", new SwordStates.CombatState(this));
         AddState("Attack", new SwordStates.AttackState(this));
+        AddState("Retreat", new SwordStates.RetreatState(this));
     }
 
     public override void StartFSM(string startState, EnemyBehavior controller)
@@ -40,7 +41,7 @@ public class SwordBrain : EnemyBrain
         }
 
 
-        if (LineOfSight && !(_currentState.GetName() is "Combat" or "Attack"))
+        if (LineOfSight && !(_currentState.Name is "Combat" or "Attack"))
             ChangeState("Combat", controller);
 
     }

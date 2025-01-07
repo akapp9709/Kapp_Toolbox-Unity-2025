@@ -39,7 +39,7 @@ namespace AIModels
 
         public void ChangeState(string state, EnemyBehavior controller)
         {
-            if (_states.ContainsKey(state) && state != _currentState.GetName())
+            if (_states.ContainsKey(state) && state != _currentState.Name)
             {
                 _currentState.ExitState(controller);
                 _currentState = _states[state];
@@ -54,7 +54,7 @@ namespace AIModels
 
     public interface IState
     {
-        string GetName();
+        string Name { get; }
         void EnterState(EnemyBehavior controller);
         void UpdateState(EnemyBehavior controller);
         void ExitState(EnemyBehavior controller);

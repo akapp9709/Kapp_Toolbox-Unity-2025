@@ -30,6 +30,8 @@ public class SwordStates
         {
         }
 
+        public string Name => "Patrol";
+
         public void EnterState(EnemyBehavior controller)
         {
             _brain.TryGetValue("Patrol-Points", out _patrolPoints);
@@ -49,11 +51,6 @@ public class SwordStates
         public void ExitState(EnemyBehavior controller)
         {
 
-        }
-
-        public string GetName()
-        {
-            return "Patrol";
         }
 
         public void UpdateState(EnemyBehavior controller)
@@ -96,6 +93,8 @@ public class SwordStates
         Animator _anim;
         int _hashSpeed, _hashX, _hashY, _hashCombatFlag;
 
+        public string Name => "Combat";
+
         public void EnterState(EnemyBehavior controller)
         {
 
@@ -128,11 +127,6 @@ public class SwordStates
         public void ExitState(EnemyBehavior controller)
         {
             _anim.SetFloat(_hashCombatFlag, 0);
-        }
-
-        public string GetName()
-        {
-            return "Combat";
         }
 
         public void UpdateState(EnemyBehavior controller)
@@ -210,6 +204,9 @@ public class SwordStates
         Transform _targetTrans;
         int _hashAttackTrigger;
         bool _attacking;
+
+        public string Name => "Attack";
+
         public AttackState(EnemyBrain brain) : base(brain)
         {
         }
@@ -245,13 +242,28 @@ public class SwordStates
         {
             _attacking = false;
         }
+    }
 
-        public string GetName()
+    public class RetreatState : SwordState, IState
+    {
+        public RetreatState(EnemyBrain brain) : base(brain) { }
+
+        public string Name => "Retreat";
+
+        public void EnterState(EnemyBehavior controller)
         {
-            return "Attack";
+
         }
 
+        public void ExitState(EnemyBehavior controller)
+        {
 
+        }
+
+        public void UpdateState(EnemyBehavior controller)
+        {
+
+        }
     }
 
 }

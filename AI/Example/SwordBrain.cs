@@ -30,19 +30,15 @@ public class SwordBrain : EnemyBrain
     {
         base.UpdateFSM(controller);
         var vertOffset = new Vector3(0, 1, 0);
+        // if (!Physics.Linecast(controller.transform.position + vertOffset, _target.position + vertOffset, out RaycastHit hitInfo, _layerMask))
+        // {
+        //     LineOfSight = true;
 
-        Debug.DrawLine(controller.transform.position + vertOffset, _target.position + vertOffset);
-
-
-        if (!Physics.Linecast(controller.transform.position + vertOffset, _target.position + vertOffset, out RaycastHit hitInfo, _layerMask))
-        {
-            LineOfSight = true;
-
-        }
+        // }
 
 
-        if (LineOfSight && !(_currentState.Name is not "Patrol"))
-            ChangeState("Combat", controller);
+        // if (LineOfSight && !(_currentState.Name is not "Patrol"))
+        //     ChangeState("Combat", controller);
 
     }
 }

@@ -36,6 +36,6 @@ public class RootNode : Node
 
     public override void SortChildren()
     {
-        child.SortChildren();
+        child?.SortChildren();
     }
 }

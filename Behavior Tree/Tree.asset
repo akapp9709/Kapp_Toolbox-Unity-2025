@@ -32,7 +32,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 19c51bda2241d754fa95d895a0bc333a
-  position: {x: 146.91608, y: 172.8}
+  position: {x: 238, y: 255}
   message: Fiesty
 --- !u!114 &-4861205600975306863
 MonoBehaviour:
@@ -49,8 +49,8 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 42ad027b092d14143924c2534e390549
-  position: {x: -173, y: 173}
-  child: {fileID: 0}
+  position: {x: -136.99998, y: 173}
+  child: {fileID: 1021958868114894544}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,7 +86,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 14b05a3da89d9c54c8345fa949e47601
-  position: {x: 146.91608, y: 249.59999}
+  position: {x: 238, y: 173}
   duration: 1
 --- !u!114 &1021958868114894544
 MonoBehaviour:
@@ -103,5 +103,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: f68b84507b7f6194fb1b4a8807af174e
-  position: {x: 0, y: 0}
-  children: []
+  position: {x: 47.385056, y: 173.00003}
+  children:
+  - {fileID: 821867571711721150}
+  - {fileID: -6939142360004454248}

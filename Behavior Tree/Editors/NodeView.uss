@@ -1,0 +1,109 @@
+#node-border {
+    background-color: rgb(32, 32, 32);
+    border-left-color: rgba(79, 0, 0, 0);
+    border-right-color: rgba(79, 0, 0, 0);
+    border-top-color: rgba(79, 0, 0, 0);
+    border-bottom-color: rgba(79, 0, 0, 0);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    align-items: center;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    color: rgb(125, 125, 125);
+}
+
+#selection-border {
+    border-left-color: rgb(29, 141, 206);
+    border-right-color: rgb(29, 141, 206);
+    border-top-color: rgb(29, 141, 206);
+    border-bottom-color: rgb(29, 141, 206);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+:hover > #selection-border {
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(132, 159, 216);
+    border-right-color: rgb(132, 159, 216);
+    border-top-color: rgb(132, 159, 216);
+    border-bottom-color: rgb(132, 159, 216);
+}
+
+:selected > #selection-border {
+    border-left-color: rgb(30, 141, 198);
+    border-right-color: rgb(30, 141, 198);
+    border-top-color: rgb(30, 141, 198);
+    border-bottom-color: rgb(30, 141, 198);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+.node {
+    width: 150px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+#title {
+    font-size: 16px;
+    -unity-font-style: bold;
+}
+
+#description {
+    font-size: 10px;
+}
+
+#divider {
+    min-height: 1px;
+    background-color: rgb(72, 72, 72);
+}
+
+.action #top {
+    background-color: rgb(168, 28, 28);
+}
+
+.composite #top {
+    background-color: rgb(200, 176, 0);
+}
+
+#top {
+    width: 100%;
+}
+
+.decorator #top {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    background-color: rgb(22, 111, 0);
+}
+
+.root #top {
+    background-color: rgb(93, 6, 144);
+}

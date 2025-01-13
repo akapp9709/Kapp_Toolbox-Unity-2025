@@ -7,13 +7,14 @@ using UnityEditor.Experimental.GraphView;
 using System;
 using TreeEditor;
 using System.Linq;
+using BehaviorTree;
 
 
 public class BehaviorTreeView : GraphView
 {
     public Action<NodeView> OnNodeSelected;
     public new class UxmlFactory : UxmlFactory<BehaviorTreeView, GraphView.UxmlTraits> { }
-    BehaviorTree tree;
+    BehaviorTreeClass tree;
 
     public BehaviorTreeView()
     {
@@ -26,9 +27,18 @@ public class BehaviorTreeView : GraphView
 
         var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Behavior Tree/Editors/BehaviorTreeEditor.uss");
         styleSheets.Add(styleSheet);
+
+        Undo.undoRedoPerformed += OnUndoRedo;
     }
 
-    internal void PopulateView(BehaviorTree tree)
+    private void OnUndoRedo()
+    {
+        PopulateView(tree);
+
+        AssetDatabase.SaveAssets();
+    }
+
+    internal void PopulateView(BehaviorTreeClass tree)
     {
         this.tree = tree;
 
@@ -103,7 +113,14 @@ public class BehaviorTreeView : GraphView
             });
         }
 
-        SortTreeNodes();
+        if (graphViewChange.movedElements != null)
+        {
+            nodes.ForEach(n =>
+            {
+                var view = n as NodeView;
+                view.SortChildren();
+            });
+        }
         return graphViewChange;
     }
 

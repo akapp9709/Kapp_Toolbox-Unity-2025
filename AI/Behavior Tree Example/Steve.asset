@@ -1,6 +1,42 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8415760402493582254
+--- !u!114 &-852620642366924268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbabc8ad40fca3a449ffa2ee0aa615b0, type: 3}
+  m_Name: DebugLogNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 0e3e7ec9b4d19474e9f93f3185c0488b
+  position: {x: 785, y: 0}
+  message: Cooled Off
+  textColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &-701432958567788078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73154f2f99d7ff14f947e448e8a9f699, type: 3}
+  m_Name: CoolDownNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 6a2dfa8038719e9458a9ee7b9f5ad64e
+  position: {x: 595.4781, y: 0.000023126602}
+  child: {fileID: -852620642366924268}
+  duration: 3
+--- !u!114 &-575820709409199155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,9 +50,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: f08217603a6f7ca448d5ae598357381e
-  position: {x: 169, y: 0}
-  child: {fileID: 9118418287009387328}
+  guid: 427c2a900841bc748b42de8a23311980
+  position: {x: 187, y: 0}
+  child: {fileID: 8041293452212127925}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33,8 +69,11 @@ MonoBehaviour:
   treeState: 0
   nodes:
   - {fileID: 5211103736023044756}
-  - {fileID: -8415760402493582254}
   - {fileID: 9118418287009387328}
+  - {fileID: -575820709409199155}
+  - {fileID: -852620642366924268}
+  - {fileID: 8041293452212127925}
+  - {fileID: -701432958567788078}
 --- !u!114 &5211103736023044756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51,7 +90,26 @@ MonoBehaviour:
   started: 0
   guid: 0b9067ca2f30d9f45b14919553b3b413
   position: {x: 0, y: 0}
-  child: {fileID: -8415760402493582254}
+  child: {fileID: -575820709409199155}
+--- !u!114 &8041293452212127925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2831f8547e48aee4bbc4583aa118b158, type: 3}
+  m_Name: SelectorNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 0537d51dbf595da46a300c91f995e564
+  position: {x: 388.4781, y: 0.000023126602}
+  children:
+  - {fileID: -701432958567788078}
+  - {fileID: 9118418287009387328}
 --- !u!114 &9118418287009387328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,5 +125,6 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 849ac929b2d35b3499858463fb4c2a65
-  position: {x: 368, y: 0}
+  position: {x: 595, y: 104}
   message: Awaiting Instruction
+  textColor: {r: 0.9254902, g: 0.5529981, b: 0, a: 1}

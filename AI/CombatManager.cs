@@ -42,6 +42,7 @@ public class CombatManager : MonoBehaviour
 
     public bool RequestTickets(int amount, EnemyBehavior entity)
     {
+        //Weighted attack selection
         bool canAttack = (entity != _lastAttacker)
             || Random.Range(0, 1f) > repeatAttackChance;
 

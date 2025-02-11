@@ -9,7 +9,7 @@ public class AutoSave
 {
     private static double saveInterval = 120;
     private static double lastSaveTime;
-    static bool _canSave = false;
+    static bool _canSave = true;
 
 
     static AutoSave()
@@ -41,6 +41,7 @@ public class AutoSave
         {
             SaveScene();
             lastSaveTime = EditorApplication.timeSinceStartup;
+            Debug.Log("Saving Scene");
         }
     }
 

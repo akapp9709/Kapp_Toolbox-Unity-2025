@@ -1,3 +1,0 @@
-For this asset to work, please place it into the Assets folder of your Unity Project.
-
-Thank you.

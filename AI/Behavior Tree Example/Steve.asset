@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-852620642366924268
+--- !u!114 &-7170820099721188765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,28 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 0e3e7ec9b4d19474e9f93f3185c0488b
-  position: {x: 785, y: 0}
-  message: Cooled Off
-  textColor: {r: 1, g: 0, b: 0, a: 1}
---- !u!114 &-701432958567788078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73154f2f99d7ff14f947e448e8a9f699, type: 3}
-  m_Name: CoolDownNode
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 6a2dfa8038719e9458a9ee7b9f5ad64e
-  position: {x: 595.4781, y: 0.000023126602}
-  child: {fileID: -852620642366924268}
-  duration: 3
+  guid: c9859fff75eb29d4cbfa8b9f3ccf48eb
+  position: {x: 1231.9999, y: -0.000004053116}
+  message: Moving to patrol waypoint
+  textColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &-575820709409199155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,9 +53,30 @@ MonoBehaviour:
   - {fileID: 5211103736023044756}
   - {fileID: 9118418287009387328}
   - {fileID: -575820709409199155}
-  - {fileID: -852620642366924268}
   - {fileID: 8041293452212127925}
-  - {fileID: -701432958567788078}
+  - {fileID: 7649088814014084072}
+  - {fileID: 7216801797865960041}
+  - {fileID: -7170820099721188765}
+  - {fileID: 1105897940386974633}
+  - {fileID: 6058419766782795387}
+--- !u!114 &1105897940386974633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbabc8ad40fca3a449ffa2ee0aa615b0, type: 3}
+  m_Name: DebugLogNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 936c66cbefe8faf44b3cb5ca80f29c8e
+  position: {x: 1232, y: 99.99998}
+  message: Reached Waypoint
+  textColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &5211103736023044756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +94,62 @@ MonoBehaviour:
   guid: 0b9067ca2f30d9f45b14919553b3b413
   position: {x: 0, y: 0}
   child: {fileID: -575820709409199155}
+--- !u!114 &6058419766782795387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71d48b1d933d18d4a8d10331c37c2971, type: 3}
+  m_Name: WaitNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 9d7780728198e1e449d157ed0b9bab4d
+  position: {x: 1232, y: 198.71182}
+  duration: 10
+--- !u!114 &7216801797865960041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e697a3d3dc8c85a47afbc662cce83db1, type: 3}
+  m_Name: SequencerNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: a2d982961bb0b504b971f38b0b63efe8
+  position: {x: 918, y: 0}
+  children:
+  - {fileID: -7170820099721188765}
+  - {fileID: 1105897940386974633}
+  - {fileID: 6058419766782795387}
+--- !u!114 &7649088814014084072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56de7102c1cc41346885b4ab809672d6, type: 3}
+  m_Name: CheckBool
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 1c2563c4888ad554c95833bd1d436fb6
+  position: {x: 659.7251, y: 0.000022888184}
+  child: {fileID: 7216801797865960041}
+  dataID: line-of-sight
+  condition: 1
 --- !u!114 &8041293452212127925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,7 +167,7 @@ MonoBehaviour:
   guid: 0537d51dbf595da46a300c91f995e564
   position: {x: 388.4781, y: 0.000023126602}
   children:
-  - {fileID: -701432958567788078}
+  - {fileID: 7649088814014084072}
   - {fileID: 9118418287009387328}
 --- !u!114 &9118418287009387328
 MonoBehaviour:
@@ -125,6 +184,6 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 849ac929b2d35b3499858463fb4c2a65
-  position: {x: 595, y: 104}
+  position: {x: 660, y: 164.5}
   message: Awaiting Instruction
   textColor: {r: 0.9254902, g: 0.5529981, b: 0, a: 1}

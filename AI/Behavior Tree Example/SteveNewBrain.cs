@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using BehaviorTree.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -22,10 +23,18 @@ namespace BehaviorTree
             Gizmos.DrawCube(debugPos, Vector3.one);
         }
 
-        void Start()
+        protected override void Awake()
         {
+            base.Awake();
+            tree.behaviorTreeEvents = GetComponent<IBehaviorTreeEvents>();
+        }
+
+        protected override void Start()
+        {
+
             WriteToBlackBoard("line-of-sight", _lineOfSight);
             _target = GameObject.FindGameObjectWithTag("Player").transform;
+            base.Start();
         }
 
         protected override void Update()

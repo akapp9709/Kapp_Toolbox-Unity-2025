@@ -45,10 +45,13 @@ public class CombatManager : MonoBehaviour
     public bool RequestTicket(int amount, IBehaviorTreeEvents _events)
     {
         bool canAttack = (_events != _lastTreeEntity)
-            || Random.Range(0, 1f) > repeatAttackChance;
+            || Random.Range(0, 1f) < repeatAttackChance;
 
         if (!canAttack)
+        {
+            Debug.Log("Ticket Denied");
             return false;
+        }
 
         if (amount <= currentTickets && _canGrantTicket)
         {

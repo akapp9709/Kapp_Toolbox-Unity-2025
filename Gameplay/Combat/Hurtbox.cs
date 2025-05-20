@@ -11,7 +11,7 @@ public class Hurtbox : MonoBehaviour
     public string Name;
     public float ZoneDamageReduction;
 
-    public bool IsActive { get; private set; }
+    public bool IsActive;
     public float EffectiveDamageReduction;
     // Start is called before the first frame update
     void Start()

@@ -11,14 +11,16 @@ namespace BehaviorTree
     {
         Vector3 vertOffset = new Vector3(0, 1, 0);
         [SerializeField] bool _lineOfSight;
-        Transform _target;
+        public Transform target;
         [SerializeField] LayerMask _layerMask;
         private Vector3 debugPos;
 
+        LineOfSight _sight;
+
         void OnDrawGizmos()
         {
-            if (_target != null)
-                Gizmos.DrawSphere(_target.position, 1f);
+            if (target != null)
+                Gizmos.DrawSphere(target.position, 1f);
 
             Gizmos.DrawCube(debugPos, Vector3.one);
         }
@@ -31,9 +33,10 @@ namespace BehaviorTree
 
         protected override void Start()
         {
+            _sight = GetComponent<LineOfSight>();
 
             WriteToBlackBoard("line-of-sight", _lineOfSight);
-            _target = GameObject.FindGameObjectWithTag("Player").transform;
+            target = GameObject.FindGameObjectWithTag("Player").transform;
             base.Start();
         }
 
@@ -42,22 +45,28 @@ namespace BehaviorTree
             base.Update();
 
             var pos = transform.position + vertOffset;
-            var targetPos = _target.position + vertOffset;
+            var targetPos = target.position + vertOffset;
 
-            if (Physics.Raycast(pos, targetPos - pos, out RaycastHit hitInfo, 100, ~_layerMask))
-            {
-                if (hitInfo.transform.tag == "Player")
-                {
-                    _lineOfSight = true;
-                }
-                else
-                {
-                    _lineOfSight = false;
-                }
-                debugPos = hitInfo.point;
-            }
+            // if (Physics.Raycast(pos, targetPos - pos, out RaycastHit hitInfo, 100, ~_layerMask))
+            // {
+            //     Debug.Log(hitInfo.transform.tag);
+            //     if (hitInfo.transform.tag == "Player")
+            //     {
+            //         _lineOfSight = true;
+            //     }
+            //     else
+            //     {
+            //         _lineOfSight = false;
+            //     }
+            //     debugPos = hitInfo.point;
+            // }
+
+            _lineOfSight = _sight.FindVisibleTargets();
 
             WriteToBlackBoard("line-of-sight", _lineOfSight);
+
+            var distanceToPlayer = Vector3.Distance(targetPos, pos);
+            WriteToBlackBoard("distance-to-player", distanceToPlayer);
         }
     }
 }

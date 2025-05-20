@@ -262,7 +262,7 @@ public class SwordStates
 
         public void EnterState(EnemyBehavior controller)
         {
-            Debug.Log("Entering Retreat State");
+            // Debug.Log("Entering Retreat State");
 
             _transform = controller.transform;
             _brain.TryGetValue("Target", out _targetTrans);

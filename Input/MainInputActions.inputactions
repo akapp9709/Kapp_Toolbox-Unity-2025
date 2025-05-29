@@ -80,9 +80,9 @@
             ],
             "bindings": [
                 {
-                    "name": "2D Vector",
+                    "name": "WSAD",
                     "id": "79ef8da7-2309-465e-9e7a-f61d42a281c7",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

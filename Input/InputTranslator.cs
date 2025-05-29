@@ -81,29 +81,73 @@ namespace Toolbox.Input
             }
         }
 
+        public Action OnAbility4Started, OnAbility4Canceled;
         private void OnAbility4(InputAction.CallbackContext context)
         {
-            Debug.Log("Ability 4 Action");
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    OnAbility4Started?.Invoke();
+                    break;
+                case InputActionPhase.Canceled:
+                    OnAbility4Canceled?.Invoke();
+                    break;
+            }
         }
 
+        public Action OnAbility1Started, OnAbility1Canceled;
         private void OnAbility1(InputAction.CallbackContext context)
         {
-            Debug.Log("Ability 1 Action");
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    OnAbility1Started?.Invoke();
+                    break;
+                case InputActionPhase.Canceled:
+                    OnAbility1Canceled?.Invoke();
+                    break;
+            }
         }
 
+        public Action OnSecondaryActionStarted, OnSecondaryActionPerformed, OnSecondaryActionCanceled;
         private void OnSecondaryAction(InputAction.CallbackContext context)
         {
-            Debug.Log("Secondary action");
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    OnSecondaryActionStarted?.Invoke();
+                    break;
+                case InputActionPhase.Canceled:
+                    OnSecondaryActionCanceled?.Invoke();
+                    break;
+                case InputActionPhase.Performed:
+                    OnSecondaryActionPerformed?.Invoke();
+                    break;
+            }
         }
 
+        public Action OnMainActionStarted, OnMainActionPerformed, OnMainActionCanceled;
         private void OnMainAction(InputAction.CallbackContext context)
         {
-            Debug.Log("Main Action");
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    OnMainActionStarted?.Invoke();
+                    break;
+                case InputActionPhase.Canceled:
+                    OnMainActionCanceled?.Invoke();
+                    break;
+                case InputActionPhase.Performed:
+                    OnMainActionPerformed?.Invoke();
+                    break;
+            }
         }
 
+        public Action OnMoveStart, OnMovePerformed, OnMoveCanceled, OnMoveMaster;
+        public Vector2 MoveDirection;
         private void OnMove(InputAction.CallbackContext context)
         {
-            Debug.Log("Tryna Move");
+            MoveDirection = context.ReadValue<Vector2>();
         }
     }
 }

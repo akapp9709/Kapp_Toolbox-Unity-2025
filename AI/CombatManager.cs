@@ -26,7 +26,7 @@ public class CombatManager : MonoBehaviour
     void Update()
     {
         _coolDownTimer?.Tick(Time.deltaTime);
-        if (currentTickets <= maxTickets)
+        if (currentTickets < maxTickets)
             _replenishTimer?.Tick(Time.deltaTime);
     }
 

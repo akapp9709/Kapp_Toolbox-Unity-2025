@@ -40,6 +40,31 @@ namespace Toolbox.Input
             _input.Main.AbilitySlot4.canceled += OnAbility4;
 
             _input.Main.SpaceBar.started += OnSpace;
+
+            _input.Main.Sprint.started += OnSprint;
+            _input.Main.Sprint.canceled += OnSprint;
+
+            _input.Main.Aim.performed += OnAim;
+        }
+
+        public Vector2 AimDirection { get; private set; }
+        private void OnAim(InputAction.CallbackContext context)
+        {
+            AimDirection = context.ReadValue<Vector2>();
+        }
+
+        public Action OnSprintedStarted, OnSprintCanceled;
+        private void OnSprint(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    OnSprintedStarted?.Invoke();
+                    break;
+                case InputActionPhase.Canceled:
+                    OnSprintCanceled?.Invoke();
+                    break;
+            }
         }
 
         public Action OnSpaceStarted, OnSpaceCanceled;
